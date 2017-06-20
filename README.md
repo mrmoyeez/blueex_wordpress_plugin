@@ -1,16 +1,19 @@
 # Blue Ex Wordpress Plugin
-Blue ex is a courier service. This plugin will enable you to connect blue ex API and your woocommerce store.You will find the configuration menu for this plugin under the "Settings" tab in left panel of wordpress dashboard.
+Blue ex is a courier service. This plugin will enable you to connect [Blue ex](http://blue-ex.com/) API and your [woocommerce](https://wordpress.org/plugins/woocommerce/) store.You will find the configuration menu for this plugin under the _"Settings"_** tab in wordpress dashboard.
 
 #### 1. Creating configuration Page:
 First of all, you need to create a configuration page for this plugin in the wordpress admin dashboard.
 Below code will call the configuration page.
+
 ![alt text](https://github.com/virtualforce/blueex_wordpress_plugin/blob/master/images/configuration.png "call to configuration page")
 
-blueex_settings_page.php is the page that is responsible for the configuration. This page contains the form with some basic configuration as below.
+_blueex_settings_page.php_** is the page that is responsible for the configuration. This page contains the form with some basic configuration as below.
+
 ![alt text](https://github.com/virtualforce/blueex_wordpress_plugin/blob/master/images/configuration1.png "configuration page")
 
 #### 2. Dependency Check:
-Now let's move to the core side of this plugin.As this plugin is going to work with woocommerce that is another plugin of wordpress so we need to make sure that plugin is installed and active.If woocommerce is installed, we will create a new database table for storing tracking no.And below code do this work.
+Now let's move to the core side of this plugin. As this plugin is going to work with woocommerce that is another plugin of wordpress so we need to make sure that plugin is installed and active.If woocommerce is installed, we will create a new database table for storing tracking no.And below code do this work.
+
 ![alt text](https://github.com/virtualforce/blueex_wordpress_plugin/blob/master/images/woocommerce-check.png "Dependency Check")
 
 #### 3. Call to Main Function:
@@ -20,6 +23,7 @@ Now we have to write a function that will send data in XML form to Blue Ex API a
 In this function , i have put several checks for order details and city codes that was provided by blue ex support.
 
 Now above discussed function needs to call on some event/action of wordpress.And that is done by below code.
+
 ![alt text](https://github.com/virtualforce/blueex_wordpress_plugin/blob/master/images/function_call.png "Call to main function")
 
 
@@ -40,5 +44,5 @@ add_action('woocommerce_admin_order_data_after_shipping_address','blueex_display
 ### References:
 
  * [Hooks](https://developer.wordpress.org/plugins/hooks/) for basic hooks of wordpress
- * [WPMUDEV](https://premium.wpmudev.org/blog/creating-database-tables-for-plugins/) for creating database while installing plugin
+ * [WPMUDEV](https://premium.wpmudev.org/blog/creating-database-tables-for-plugins/) for creating database tables while installing plugin
  * [squelchdesign](http://squelchdesign.com/web-design-newbury/woocommerce-detecting-order-complete-on-order-completion/) for hooks on order status
