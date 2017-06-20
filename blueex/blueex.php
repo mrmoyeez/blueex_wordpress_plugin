@@ -9,9 +9,9 @@
    License: GPL2
    */
 
+//Check Dependencies
 register_activation_hook( __FILE__, 'child_plugin_activate' );
 function child_plugin_activate(){
-	// Require parent plugin
     if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) and current_user_can( 'activate_plugins' ) ) {
         // Stop activation redirect and show error
         wp_die('Sorry, but this plugin requires Woocommerce Plugin to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
@@ -32,17 +32,19 @@ function child_plugin_activate(){
 			dbDelta( $sql );
     }
 }
+//settings page
 function blueex_admin_actions_settings() {
     add_options_page("Blue Ex Settings", "Blue Ex Settings", 1, "Blue Ex Settings", "blueex_admin");
 }
-//settings page
 function blueex_admin() {
     include('blueex_settings_page.php');
-}
- 
+} 
 add_action('admin_menu', 'blueex_admin_actions_settings');
-// display the extra data on Thank you page
+
+// get the event type on which API will be hit.
 $event_on_call = get_option('eventName_blueex_called');
+
+//function that will be called on specific event
 function blueex_display_order_data_processing_status($order_id){ 
 	$blueex_username = get_option('blueex_username');
 	$blueex_paswword = get_option('blueex_paswword');
@@ -1421,12 +1423,14 @@ function blueex_display_order_data_processing_status($order_id){
 			$city = 'SGL';
 		}
 	}
+	//get product name and no of items in this specific order
 	$order = new WC_Order( $order_id );
 	$items = $order->get_items();
 	foreach( $items as $item) {
     	$product_name = $item['name'];
     	$quantity = $item['quantity'];
 	}
+	//Blue ex api code
 	define('blueEx', "http://benefitx.blue-ex.com/api/post.php");
 	$xml = '<?xml version="1.0" encoding="utf-8"?>
 	<BenefitDocument>
@@ -1487,7 +1491,8 @@ function blueex_display_order_data_processing_status($order_id){
 	
 }
 add_action($event_on_call, 'blueex_display_order_data_processing_status', 30 );
-// tracking my-account order review
+
+// show tracking no on user side on order detail page.
 function blueex_display_order_view_data_user_account( $order_id ){  
 
 	
@@ -1508,8 +1513,7 @@ function blueex_display_order_view_data_user_account( $order_id ){
 }
 add_action( 'woocommerce_view_order', 'blueex_display_order_view_data_user_account', 30 );
 
-
-//add custom section in order detial to show tracking no
+//Show tracking number on admin side order detail page
 function blueex_display_order_data_in_admin_order_page( $order ){
     	echo '<div class="order_data_column">';
         $order_id = $order->data['id'];
@@ -1528,5 +1532,4 @@ function blueex_display_order_data_in_admin_order_page( $order ){
 	echo '</div>';
 }
 add_action('woocommerce_admin_order_data_after_shipping_address','blueex_display_order_data_in_admin_order_page' );
-//set order status of cod order to on-hold
 ?>
