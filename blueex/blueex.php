@@ -11,8 +11,7 @@
 
 register_activation_hook( __FILE__, 'child_plugin_activate' );
 function child_plugin_activate(){
-
-    // Require parent plugin
+	// Require parent plugin
     if ( ! is_plugin_active( 'woocommerce/woocommerce.php' ) and current_user_can( 'activate_plugins' ) ) {
         // Stop activation redirect and show error
         wp_die('Sorry, but this plugin requires Woocommerce Plugin to be installed and active. <br><a href="' . admin_url( 'plugins.php' ) . '">&laquo; Return to Plugins</a>');
@@ -43,7 +42,8 @@ function blueex_admin() {
  
 add_action('admin_menu', 'blueex_admin_actions_settings');
 // display the extra data on Thank you page
-function blueex_display_order_data_processing_status($order_id){  
+$event_on_call = get_option('eventName_blueex_called');
+function blueex_display_order_data_processing_status($order_id){ 
 	$blueex_username = get_option('blueex_username');
 	$blueex_paswword = get_option('blueex_paswword');
 	
@@ -1479,12 +1479,14 @@ function blueex_display_order_data_processing_status($order_id){
 	                                'order_id' => $order_id,
 	                                'tracking_no' => $tracking_no,
 	                                ),array('%s','%s'));
-	//echo '<h2>Order Tracking Info</h2>';
-	//echo $tracking_no;
-	//store value to database
-
+	
+	if(get_option('eventName_blueex_called') == 'woocommerce_thankyou'){
+		echo '<h2>Order Tracking Info</h2>';
+		echo $tracking_no;
+	}
+	
 }
-add_action( 'woocommerce_order_status_completed', 'blueex_display_order_data_processing_status', 30 );
+add_action($event_on_call, 'blueex_display_order_data_processing_status', 30 );
 // tracking my-account order review
 function blueex_display_order_view_data_user_account( $order_id ){  
 
