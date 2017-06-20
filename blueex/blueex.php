@@ -1483,7 +1483,7 @@ function blueex_display_order_data_processing_status($order_id){
 	                                'order_id' => $order_id,
 	                                'tracking_no' => $tracking_no,
 	                                ),array('%s','%s'));
-	
+	//show tracking number  on thank you page
 	if(get_option('eventName_blueex_called') == 'woocommerce_thankyou'){
 		echo '<h2>Order Tracking Info</h2>';
 		echo $tracking_no;
