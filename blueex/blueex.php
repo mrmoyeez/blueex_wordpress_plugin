@@ -1,11 +1,11 @@
 <?php
    /*
-   Plugin Name: Blue EX
-   Plugin URI: http://virtualforce.io
+   Plugin Name: Blue EX for Pakistan
+   Plugin URI: https://github.com/virtualforce/blueex_wordpress_plugin
    Description: This plugins enables you to connect with Blue Ex API. When any order is generated, you will have unique tracking no that you can use for tracking on your website or on Blue EX Portal.
    Version: 1.0
    Author: Naqash
-   Author URI: http://jklabz.io/naqash/
+   Author URI: http://virtualforce.io/
    License: GPL2
    */
 
